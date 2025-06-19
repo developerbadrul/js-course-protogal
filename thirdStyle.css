@@ -1,0 +1,23 @@
+
+.toggle-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    background-color: #333;
+    color: white;
+    border-radius: 5px;
+    margin: 10px;
+}
+
+.toggle-btn:hover {
+    background-color: #555;
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+    background-color: lightgray;
+}

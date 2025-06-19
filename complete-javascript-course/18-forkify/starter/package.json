@@ -1,0 +1,26 @@
+{
+  "name": "starter",
+  "version": "1.0.0",
+  "description": "নতুন প্রজেক্ট",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
+  },
+  "keywords": [
+    "Badrul",
+    "developer",
+    "badrul",
+    "বদরুল"
+  ],
+  "author": "Md Badrul",
+  "license": "ISC",
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.15.1",
+    "parcel": "^2.15.1"
+  },
+  "dependencies": {
+    "core-js": "^3.42.0",
+    "fractional": "^1.0.0",
+    "regenerator-runtime": "^0.14.1"
+  }
+}

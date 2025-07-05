@@ -19,15 +19,26 @@ export default class View {
     const newElement = newDOM.querySelectorAll('*');
     const curElements = this._parentElement.querySelectorAll('*')
 
+    // update changed TEXT
     newElement.forEach((newEl, i) => {
       const curEl = curElements[i]
       // console.log(curEl, newEl.isEqualNode(curEl));
-      if (!newEl.isEqualNode(curEl) && newEl.firstChild.nodeValue.trim() !== '') {
-        console.log(newEl.firstChild, newEl.firstChild.nodeValue);
-
+      if (!newEl.isEqualNode(curEl) &&
+        newEl.firstChild?.nodeValue.trim() !== '') {
+        // console.log(newEl.firstChild, newEl.firstChild.nodeValue);
         curEl.textContent = newEl.textContent
+      };
+
+      // update changed ATTRIBUTES
+      if (!newEl.isEqualNode(curEl)) {
+        // console.log(newEl.attributes);
+        Array.from(newEl.attributes).forEach(attr => {
+          // console.log(attr.name, attr.value);
+          curEl.setAttribute(attr.name, attr.value)
+        })
       }
     })
+
 
   }
 

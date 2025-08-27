@@ -20,7 +20,7 @@ const controlRecipe = async function () {
     recipeView.renderSpnnier()
     // Update result view to mark selected search result
     resultsView.update(model.getSearchResultsPage())
-
+    // debugger;
     // update bookmark seleceted
     bookmarkView.update(model.state.bookmarks)
     // load recipe

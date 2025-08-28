@@ -1,21 +1,42 @@
-import icons from 'url:../../img/icons.svg';
 import View from "./View.js";
 
 class AddRecipeView extends View {
-    _parentElement = document.querySelector('.bookmarks__list');
-    _errorMessage = 'No bookmark yet. find a nice recipes & bookmark it ;)';
-    _message = '';
+    _parentElement = document.querySelector('.upload');
+    _window = document.querySelector('.add-recipe-window');
+    _overlay = document.querySelector('.overlay');
+    _btnOpen = document.querySelector('.nav__btn--add-recipe');
+    _btnClose = document.querySelector('.btn--close-modal');
 
-   
-    _generateMarkup() {
-        // console.log(this._data);
-        return this._data?.map(result => this._generateMarkupPreview(result)).join('');
+
+    constructor() {
+        super();
+        this._addHandlerShowWindow();
+        this._addHandlerHideWindow();
     }
 
-   
-    
+    toggleWindow() {
+        this._overlay.classList.toggle('hidden')
+        this._window.classList.toggle('hidden')
+    }
+
+    _addHandlerShowWindow() {
+        // this._btnOpen.addEventListener('click', this.toggleWindow.bind(this))
+        this._btnOpen.addEventListener('click', () => this.toggleWindow())
+    }
+
+    _addHandlerHideWindow() {
+        this._btnClose.addEventListener('click', () => this.toggleWindow())
+        this._overlay.addEventListener('click', () => this.toggleWindow())
+    }
+
+    _generateMarkup() {
+        // console.log(this._data);
+
+    }
+
+
+
 
 }
-
 
 export default new AddRecipeView()

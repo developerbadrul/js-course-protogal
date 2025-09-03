@@ -90,7 +90,12 @@ const controlLocalBookmarks = function () {
 }
 
 const controlAddRecipe = function (newRecipe) {
-  console.log(newRecipe);
+  try {
+    model.uploadRecipe(newRecipe)
+  } catch (error) {
+    console.error(error);
+    addRecipeView.renderError(error.message)
+  }
 
 }
 

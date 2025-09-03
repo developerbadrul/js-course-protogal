@@ -109,3 +109,26 @@ const init = function () {
 
 init();
 // console.log(state.bookmarks);
+
+export const uploadRecipe = function (newRecipe) {
+    const ingredients = Object.entries(newRecipe)
+      .filter(entry => entry[0].startsWith('ingredient') && entry[1].trim() !== '')
+      .map(ing => {
+        const ingArr = ing[1].split(',').map(el => el.trim());
+  
+        // Must have exactly 3 values: [quantity, unit, description]
+        if (ingArr.length !== 3) {
+          throw new Error(`Wrong ingredient format: "${ing[1]}". Please use "quantity,unit,description"`);
+        }
+  
+        const [quantity, unit, description] = ingArr;
+        return {
+          quantity: quantity ? +quantity : null,
+          unit,
+          description,
+        };
+      });
+  
+    console.log(ingredients);
+  };
+  

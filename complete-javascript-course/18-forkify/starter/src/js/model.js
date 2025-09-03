@@ -110,25 +110,38 @@ const init = function () {
 init();
 // console.log(state.bookmarks);
 
-export const uploadRecipe = function (newRecipe) {
-    const ingredients = Object.entries(newRecipe)
-      .filter(entry => entry[0].startsWith('ingredient') && entry[1].trim() !== '')
-      .map(ing => {
-        const ingArr = ing[1].split(',').map(el => el.trim());
-  
-        // Must have exactly 3 values: [quantity, unit, description]
-        if (ingArr.length !== 3) {
-          throw new Error(`Wrong ingredient format: "${ing[1]}". Please use "quantity,unit,description"`);
+export const uploadRecipe = async function (newRecipe) {
+    try {
+        const ingredients = Object.entries(newRecipe)
+            .filter(entry => entry[0].startsWith('ingredient') && entry[1].trim() !== '')
+            .map(ing => {
+                const ingArr = ing[1].split(',').map(el => el.trim());
+
+                // Must have exactly 3 values: [quantity, unit, description]
+                if (ingArr.length !== 3) {
+                    throw new Error(`Wrong ingredient format: "${ing[1]}". Please use "quantity,unit,description"`);
+                }
+
+                const [quantity, unit, description] = ingArr;
+                return {
+                    quantity: quantity ? +quantity : null,
+                    unit,
+                    description,
+                };
+            });
+
+        const recipe = {
+            title: newRecipe.title,
+            source_url: newRecipe.sourceUrl,
+            image_url: newRecipe.image,
+            publisher: newRecipe.publisher,
+            cooking_time: +newRecipe.cookingTime,
+            servings: +newRecipe.servings,
+            ingredients,
         }
-  
-        const [quantity, unit, description] = ingArr;
-        return {
-          quantity: quantity ? +quantity : null,
-          unit,
-          description,
-        };
-      });
-  
-    console.log(ingredients);
-  };
-  
+
+        console.log(recipe);
+    } catch (error) {
+        throw error
+    }
+};

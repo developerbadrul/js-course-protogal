@@ -1,6 +1,7 @@
 class SearchView {
     #parentEl = document.querySelector('.search');
     _errorMessage = 'Faild to fatch, retry!!';
+    
     getQuery() {
         const query =  this.#parentEl.querySelector('.search__field').value;
         this.#clearInput();

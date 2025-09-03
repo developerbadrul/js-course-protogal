@@ -40,11 +40,15 @@ const controlRecipe = async function () {
 
 const controlSerachResults = async function () {
   try {
-    resultsView.renderSpnnier()
     // console.log(resultsView);
-
+    resultsView.renderSpnnier()
     const query = searchView.getQuery();
-    if (!query) return;
+
+    if (!query) {
+      resultsView.renderError('No input found');
+      return;
+    };
+
 
     await model.loadSearchResult(query);
     // console.log(model?.state?.search?.result);
@@ -89,9 +93,9 @@ const controlLocalBookmarks = function () {
   bookmarkView.render(model.state.bookmarks)
 }
 
-const controlAddRecipe = function (newRecipe) {
+const controlAddRecipe = async function (newRecipe) {
   try {
-    model.uploadRecipe(newRecipe)
+    await model.uploadRecipe(newRecipe)
   } catch (error) {
     console.error(error);
     addRecipeView.renderError(error.message)

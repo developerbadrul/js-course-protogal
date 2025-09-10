@@ -1,6 +1,6 @@
 import { async } from 'regenerator-runtime';
-import { API_URL } from './config.js';
-import { getJSON } from './views/helpers.js';
+import { API_URL, KEY } from './config.js';
+import { getJSON, sendJSON } from './views/helpers.js';
 import { RES_PER_PAGE } from './config.js';
 
 export const state = {
@@ -16,22 +16,27 @@ export const state = {
 
 // console.log(state);
 
+const createRecipeObject = function (data) {
+    const { recipe } = data.data;
+    return {
+        id: recipe.id,
+        title: recipe.title,
+        publisher: recipe.publisher,
+        sourceUrl: recipe.source_url,
+        servings: recipe.servings,
+        cookingTime: recipe.cooking_time,
+        ingredients: recipe.ingredients,
+        image: recipe.image_url,
+        ...(recipe.key && { key: recipe.key })
+    }
+}
+
 export const loadRecipe = async function (id) {
     try {
 
         const data = await getJSON(`${API_URL}/recipes/${id}`)
 
-        const { recipe } = data.data;
-        state.recipe = {
-            id: recipe.id,
-            title: recipe.title,
-            publisher: recipe.publisher,
-            sourceUrl: recipe.source_url,
-            servings: recipe.servings,
-            cookingTime: recipe.cooking_time,
-            ingredients: recipe.ingredients,
-            image: recipe.image_url
-        }
+        state.recipe = createRecipeObject(data)
         // console.log(state.recipe)
         if (state.bookmarks.some(bookmark => bookmark.id === id)) {
             state.recipe.bookmarked = true;
@@ -140,7 +145,9 @@ export const uploadRecipe = async function (newRecipe) {
             ingredients,
         }
 
-        console.log(recipe);
+        const data = await sendJSON(`${API_URL}/recipes?key=${KEY}`, recipe);
+        state.recipe = createRecipeObject(data);
+        addBookmark(state.recipe)
     } catch (error) {
         throw error
     }

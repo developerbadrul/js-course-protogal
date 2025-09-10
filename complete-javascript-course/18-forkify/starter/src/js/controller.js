@@ -1,4 +1,5 @@
 import * as model from './model.js'
+import { MODAL_CLOSE_SEC } from './config.js';
 import recipeView from './views/recipeViews.js'
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
@@ -95,7 +96,17 @@ const controlLocalBookmarks = function () {
 
 const controlAddRecipe = async function (newRecipe) {
   try {
+    addRecipeView.renderSpnnier();
     await model.uploadRecipe(newRecipe)
+    console.log(model.state.recipe, 'after add recipe');
+    // show added recipe
+    recipeView.render(model.state.recipe);
+    // success message
+    addRecipeView.renderMessage()
+    // close form window
+    setTimeout(function () {
+      addRecipeView.toggleWindow();
+    }, MODAL_CLOSE_SEC * 1000)
   } catch (error) {
     console.error(error);
     addRecipeView.renderError(error.message)
